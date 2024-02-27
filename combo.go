@@ -1,18 +1,21 @@
+// Package permute provides a combination sequence iterator. Requires GOEXPERIMENT=rangefunc.
 package permute
 
 import (
 	"iter"
 )
 
-// Combinations returns an iterator of indices over the length K combinations of
-// an N sized set in lexicograph order. The yielded slice is reused and must be cloned if kept.
+// Combinations returns an iterator of indices
+// over the length K combinations of
+// an N sized set
+// in lexicograph order.
+// The yielded slice is reused and must be cloned if kept.
 //
-// E.g. for K = 2 and N = 3, it sets the yielded slice to {0, 1},
-// then {0, 2}, and finally {1, 2}.
-
+// E.g. for N = 3 and K = 2, it sets the yielded slice to
+// {0, 1}, then {0, 2}, and finally {1, 2}.
 func Combinations(n, k int) iter.Seq[[]int] {
 	return func(yield func([]int) bool) {
-		if k > n {
+		if k > n || k < 1 || n < 0 {
 			return
 		}
 		indices := make([]int, k)

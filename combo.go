@@ -52,7 +52,7 @@ func CombinationIndices(n, k int) iter.Seq[[]int] {
 // and returns an iterator over combinations of sub-string combinations of length K.
 // The yielded byte slice is reused and must be cloned or turned into a string if kept.
 //
-// E.g. For "abc", 2; the yielded slice is set to "ab", "ac", and "bc" succesively.
+// E.g. For "abc", 2; the yielded slice is set to "ab", "ac", and "bc" successively.
 func StringCombinations(s string, k int) iter.Seq[[]byte] {
 	return func(yield func([]byte) bool) {
 		buf := make([]byte, k)
@@ -71,7 +71,7 @@ func StringCombinations(s string, k int) iter.Seq[[]byte] {
 // and returns an iterator over combinations of sub-slice combinations of length K.
 // The yielded slice is reused and must be cloned if kept.
 //
-// E.g. For []byte("abc"), 2; the yielded slice is set to "ab", "ac", and "bc" succesively.
+// E.g. For []byte("abc"), 2; the yielded slice is set to "ab", "ac", and "bc" successively.
 func Combinations[E any, S ~[]E](s S, k int) iter.Seq[S] {
 	return func(yield func(S) bool) {
 		buf := make(S, k)

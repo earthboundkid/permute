@@ -17,7 +17,7 @@ func collect[T any, S []T](seq iter.Seq[S]) []S {
 	return s
 }
 
-func TestCombinations(t *testing.T) {
+func TestCombinationIndices(t *testing.T) {
 	for _, tc := range []struct {
 		N, K int
 		want [][]int
@@ -41,7 +41,44 @@ func TestCombinations(t *testing.T) {
 			{2, 3, 4},
 		}},
 	} {
-		got := collect(permute.Combinations(tc.N, tc.K))
+		got := collect(permute.CombinationIndices(tc.N, tc.K))
 		be.DeepEqual(t, tc.want, got)
+	}
+}
+
+func collectstring(seq iter.Seq[[]byte]) []string {
+	var s []string
+	for v := range seq {
+		s = append(s, string(v))
+	}
+	return s
+}
+
+func TestStringCombinations(t *testing.T) {
+	for _, tc := range []struct {
+		S    string
+		K    int
+		want []string
+	}{
+		{},
+		{"abc", 2, []string{"ab", "ac", "bc"}},
+	} {
+		got := collectstring(permute.StringCombinations(tc.S, tc.K))
+		be.AllEqual(t, tc.want, got)
+	}
+}
+
+func TestCombinations(t *testing.T) {
+	for _, tc := range []struct {
+		S    string
+		K    int
+		want []string
+	}{
+		{},
+		{"abc", 2, []string{"ab", "ac", "bc"}},
+	} {
+		b := []byte(tc.S)
+		got := collectstring(permute.Combinations(b, tc.K))
+		be.AllEqual(t, tc.want, got)
 	}
 }
